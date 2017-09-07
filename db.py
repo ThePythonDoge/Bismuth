@@ -1,26 +1,28 @@
-import time
+from time import sleep
+
 
 def execute(cursor, query):
-    """Secure execute for slow nodes"""
-    while True:
+    """
+    Secure execute for slow nodes
+    """
+    
+    while 1:
         try:
             cursor.execute(query)
-            break
-        except Exception as e:
-            print("Retrying database execute due to {}".format(e))
-            time.sleep(0.1)
-            pass # As suggested in another PR, I suggest removing this
-    return cursor
-
+            return cursor
+        except Exception as exc:
+            print("Retrying database execute due to %s"% exc)
+            sleep(0.1)
 
 def execute_param(cursor, query, param):
-    """Secure execute w/ param for slow nodes"""
-    while True:
+    """
+    Secure execute w/ param for slow nodes
+    """
+    
+    while 1:
         try:
             cursor.execute(query, param)
-            break
-        except Exception as e:
-            print("Retrying database execute due to " + str(e))
-            time.sleep(0.1)
-            pass # As mentioned above, I suggest removing this
-    return cursor
+            return cursor
+        except Exception as exc:
+            print("Retrying database execute due to %s" % ex)
+            sleep(0.1)
